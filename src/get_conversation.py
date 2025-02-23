@@ -32,10 +32,6 @@ def get_all_conversations():
         print(f"Failed to retrieve conversations from Supabase: {e}")
         return []
 
-from typing import List
-from uuid import UUID
-from datetime import datetime
-from pydantic import BaseModel
 
 
 class TranscriptSection(BaseModel):
@@ -77,14 +73,20 @@ def merge_same_speaker_sections(data: List[dict]) -> List[TranscriptSection]:
 
     return merged_sections
 
+def get_output_as_string():
+    data = get_all_conversations()
+    merged = merge_same_speaker_sections(data)
+    
+    lines = []
+    for m in merged:
+        d = m.dict()
+        line = f"{d['speaker']} {d['transcript']}"
+        lines.append(line)
+        
+    return "\n".join(lines)
+
+
 
 if __name__ == "__main__":
     # Example usage
-    data = get_all_conversations()
-
-    merged = merge_same_speaker_sections(data)
-    for m in merged:
-        print(m.dict())
-    
-    print(merged)
-
+   print(get_output_as_string())
