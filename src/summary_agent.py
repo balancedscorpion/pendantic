@@ -4,17 +4,23 @@ from litellm import completion
 
 conversation_history=get_output_as_string()
 
-def get_conversation_history(n=None):
+def get_conversation_history(n=None, o=None):
     data=get_all_conversations()
     all_conversations = merge_same_speaker_sections(data)
 
     if n is None:
-        return [(i.dict()['speaker'],i.dict()['transcript']) for i in all_conversations]
+        if o is None:
+            return [(i.dict()['speaker'],i.dict()['transcript']) for i in all_conversations]
+        else:
+            return [(i.dict()['speaker'],i.dict()['transcript']) for i in all_conversations[:o]]
     else:
-        return [(i.dict()['speaker'],i.dict()['transcript']) for i in all_conversations[:n]]
+        if o is None:
+            return [(i.dict()['speaker'],i.dict()['transcript']) for i in all_conversations[:n]]
+        else:
+            return [(i.dict()['speaker'],i.dict()['transcript']) for i in all_conversations[:n][:o]]
 
 
-conversation_history=get_conversation_history(10)
+conversation_history=get_conversation_history(10, 50)
 
 system_prompt = """You are reviewing a conversation among multiple participants.
 
