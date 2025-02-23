@@ -21,6 +21,7 @@ def get_conversation_history(n=None, o=None):
 
 
 conversation_history=get_conversation_history(10, 50)
+print(conversation_history)
 
 system_prompt = """You are reviewing a conversation among multiple participants.
 
