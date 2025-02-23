@@ -1,12 +1,10 @@
 from get_conversation import get_output_as_string, merge_same_speaker_sections, get_all_conversations
-from litellm import completion
 
-
-conversation_history=get_output_as_string()
 
 def get_conversation_history(n=None, o=None):
     data=get_all_conversations()
     all_conversations = merge_same_speaker_sections(data)
+    print(all_conversations)
 
     if n is None:
         if o is None:
@@ -17,10 +15,10 @@ def get_conversation_history(n=None, o=None):
         if o is None:
             return [(i.dict()['speaker'],i.dict()['transcript']) for i in all_conversations[:n]]
         else:
-            return [(i.dict()['speaker'],i.dict()['transcript']) for i in all_conversations[:n][:o]]
+            return [(i.dict()['speaker'],i.dict()['transcript']) for i in all_conversations[n:][:o]]
 
 
-conversation_history=get_conversation_history(10, 50)
+conversation_history=get_conversation_history(700, 750)
 print(conversation_history)
 
 system_prompt = """You are reviewing a conversation among multiple participants.

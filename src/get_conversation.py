@@ -73,9 +73,10 @@ def merge_same_speaker_sections(data: List[dict]) -> List[TranscriptSection]:
 
     return merged_sections
 
-def get_output_as_string():
+def get_output_as_string(n=None):
     data = get_all_conversations()
     merged = merge_same_speaker_sections(data)
+    
     
     lines = []
     for m in merged:
@@ -84,7 +85,6 @@ def get_output_as_string():
         lines.append(line)
         
     return "\n".join(lines)
-
 
 
 if __name__ == "__main__":
