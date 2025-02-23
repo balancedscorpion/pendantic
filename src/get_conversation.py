@@ -4,6 +4,10 @@ from datetime import datetime
 from pydantic import BaseModel
 import os
 import requests
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 SUPABASE_API_KEY = os.getenv("SUPABASE_API_KEY")
 if not SUPABASE_API_KEY:
